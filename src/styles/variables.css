@@ -1,0 +1,36 @@
+:root {
+  /* Colors */
+  --bg-color: #1C1C1E;
+  --label-font-color: #B9B9B9;
+  --font-color: #ADADAD;
+  --text-color: #FFF;
+  --subtitle-font-color: #AEAC7E;
+  --battles-font-color: #A19D72;
+  --experience-font-color: #F8AA31;
+
+  /* Gradients */
+  --experience-gradient: linear-gradient(180deg, #FFD100, #997D00);
+  --battles-block-bar-gradient: linear-gradient(180deg, #4F4F4F, #313131);
+  --battles-bar-gradient-bg: linear-gradient(180deg, #262626, #303030);
+  --battles-filled-gradient: linear-gradient(180deg, #4D4A3D, #6E653F);
+  --battles-block-bar-border: linar-gradient(180deg, #252525, #727272);
+  --battles-bar-border: linear-gradient(180deg, #2A2A2A, #3F3F3F);
+
+  /* Widget */
+  --widget-bg-color: rgba(42, 42, 42, 0.9); /* opacity: 0.9 */
+  --widget-border-color: #747474;
+
+  /* Buttons */
+  --btn-bg-color: #454540;
+  --btn-icon-color: #F9F5E1;
+
+  /* Radio buttons */
+  --radio-btn-color: #DDDDDD;
+  --radio-btn-checked-color: #676767;
+  --radio-btn-hovered-border-color: #676767;
+
+  /* Battles bar */
+  --battles-empty-bar: #1D1D1F;
+  --borders-default-color: #000;
+}
+
