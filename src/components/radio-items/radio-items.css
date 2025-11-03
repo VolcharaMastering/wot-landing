@@ -1,0 +1,100 @@
+.radio {
+    margin-bottom: 24px;
+    width: fit-content;
+}
+
+.radio-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.radio-item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    height: 18px; /* keep as requested */
+    transition: var(--transition);
+    border: none;
+    padding: 0;
+}
+
+/* radio wrapper: holds native input and the visual circle */
+.radio-radio {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    box-sizing: border-box;
+}
+
+/* Native input: keep it accessible, clickable and focusable, but invisible */
+.radio-radio input[type="radio"] {
+    position: absolute;
+    inset: 0;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2;
+    background: transparent;
+    border: none;
+}
+
+.radio-custom {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--radio-btn-color);
+    display: inline-block;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+/* inner colored dot: 10px */
+.radio-custom::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--radio-btn-checked-color);
+    transition: transform 120ms ease;
+    will-change: transform;
+    pointer-events: none;
+}
+
+/* when the native radio is checked, show the inner dot */
+.radio-radio input[type="radio"]:checked + .radio-custom::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.radio-item:hover .radio-custom {
+    box-shadow: 0 0 0 1px var(--radio-btn-hovered-border-color) inset;
+}
+
+.radio-radio input[type="radio"]:focus + .radio-custom {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--radio-btn-hovered-border-color);
+}
+
+.radio-name {
+    color: var(--text-color);
+    font-weight: 400;
+    font-size: 18px;
+    margin-left: 8px;
+    line-height: 18px;
+}
+
+.radio-item--selected .radio-custom {
+    box-shadow: 0 0 0 1px var(--subtitle-font-color) inset;
+}

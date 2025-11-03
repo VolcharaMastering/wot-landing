@@ -1,23 +1,52 @@
-/* Импорт стилей */
-@import './styles/variables.css';
+@import "./styles/variables.css";
 
-/* Set global styles */
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  font-family: 'Arial', sans-serif;
-  line-height: 1.6;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: "Arial", sans-serif;
+    line-height: 1.5;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button,
+input {
+    font-family: inherit;
+    font-size: inherit;
 }
 
 #app {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.battles-subtitle {
+    color: var(--subtitle-font-color);
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0 0 18px 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

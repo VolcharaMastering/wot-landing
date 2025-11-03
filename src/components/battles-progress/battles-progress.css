@@ -1,0 +1,76 @@
+.battles-progress {
+    width: 345px;
+    height: 107px;
+}
+.battles-progress-container {
+    position: relative;
+    width: 100%;
+    height: 57px;
+    border-radius: 6px;
+    overflow: visible;
+    /* inner background */
+    background: var(--battles-block-bg-gradient);
+}
+
+/* pseudo-element draws the gradient border and cuts out center */
+.battles-progress-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--battles-block-border); /* gradient for border */
+    padding: 1px; /* thickness of border */
+    box-sizing: border-box;
+    pointer-events: none;
+
+    /* mask to cut out the center so only the frame remains */
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+}
+.battles-progress-bar {
+    position: absolute;
+    top: 22px;
+    left: 22px;
+    width: 301px;
+    height: 8px;
+    background: var(--battles-empty-bar);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--borders-default-color);
+}
+
+.battles-progress-fill {
+    height: 100%;
+    background: var(--battles-filled-gradient);
+    border-radius: 4px;
+    transition: width 0.5s ease-in-out;
+    position: relative;
+}
+
+.battles-progress-fill::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        transparent 100%
+    );
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}

@@ -1,0 +1,118 @@
+.tank-widget {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+}
+
+.tank-widget--visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.tank-widget__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+
+.tank-widget__content {
+    position: absolute;
+    background: var(--widget-bg-color);
+    border: 1px solid var(--widget-border-color);
+    border-radius: var(--border-radius);
+    padding: 24px;
+    max-width: 672px;
+    max-height: 410px;
+    height: 100%;
+    overflow-y: auto;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+    --arrow-left: 50%;
+    overflow: visible;
+}
+
+.tank-widget--visible .tank-widget__content {
+    transform: translateY(0);
+}
+
+/* Global arrow styles */
+.tank-widget--arrow-top .tank-widget__content::before,
+.tank-widget--arrow-top .tank-widget__content::after,
+.tank-widget--arrow-bottom .tank-widget__content::before,
+.tank-widget--arrow-bottom .tank-widget__content::after {
+    left: var(--arrow-left);
+    transform: translateX(-50%);
+}
+
+/* Arrow up, widget under tank */
+.tank-widget--arrow-top .tank-widget__content::before {
+    content: "";
+    position: absolute;
+    top: -11px;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 11px solid var(--widget-border-color);
+    width: 0;
+    height: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.tank-widget--arrow-top .tank-widget__content::after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    border-bottom: 10px solid var(--widget-bg-color);
+    width: 0;
+    height: 0;
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* Aroow down, widget over tank */
+.tank-widget--arrow-bottom .tank-widget__content::before {
+    content: "";
+    position: absolute;
+    bottom: -11px;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 11px solid var(--widget-border-color);
+    width: 0;
+    height: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.tank-widget--arrow-bottom .tank-widget__content::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    border-top: 10px solid var(--widget-bg-color);
+    width: 0;
+    height: 0;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.tank-widget__body {
+    display: grid;
+    grid-template: repeat(2, auto) / repeat(2, auto);
+    gap: 0 39px;
+    align-content: center;
+}
