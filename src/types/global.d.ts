@@ -55,3 +55,14 @@ interface WidgetPlacement {
 }
 type ArrowSide = "left" | "center" | "right";
 type VerticalMode = "top" | "bottom";
+
+interface BattlesState {
+    battles: number;
+    maxBattles: number;
+}
+interface ExperienceCalculation {
+    baseExperience: number;
+    bonusMultiplier: number;
+    bonusExperience: number;
+    totalExperience: number;
+}

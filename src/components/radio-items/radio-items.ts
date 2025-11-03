@@ -18,6 +18,8 @@ export function initConfiguration(
     const configList = document.createElement("div");
     configList.className = "radio-list";
 
+    const cleanupFunctions: (() => void)[] = [];
+
     configurations.forEach((config) => {
         const configItem = createConfigItem(config, state.selectedConfiguration);
         configList.appendChild(configItem);
@@ -43,14 +45,21 @@ export function initConfiguration(
     `;
 
         const radioInput = configItem.querySelector("input") as HTMLInputElement;
-        radioInput.addEventListener("change", () => {
+        // On radio change update selection
+        const handleChange = () => {
             onStateChange({ selectedConfiguration: config });
             updateSelection();
+        };
+
+        radioInput.addEventListener("change", handleChange);
+        cleanupFunctions.push(() => {
+            radioInput.removeEventListener("change", handleChange);
         });
 
         return configItem;
     }
 
+    //Func to update the selected state of radio items based on the current state
     function updateSelection(): void {
         const allItems = container.querySelectorAll(".radio-item");
         allItems.forEach((item) => {
@@ -59,6 +68,11 @@ export function initConfiguration(
             item.classList.toggle("radio-item--selected", config === state.selectedConfiguration);
         });
     }
+
+    // cleanup
+    (container as any).cleanup = () => {
+        cleanupFunctions.forEach((cleanup) => cleanup());
+    };
 
     return container;
 }

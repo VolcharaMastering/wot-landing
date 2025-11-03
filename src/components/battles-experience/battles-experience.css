@@ -1,17 +1,27 @@
 .battles-experience {
     width: fit-content;
 }
+
 .battles-experience-container {
     display: flex;
     gap: 48px;
     align-items: center;
     justify-content: space-between;
 }
+
 .battles-experience-text {
     color: var(--experience-font-color);
     font-weight: bold;
     font-size: 56px;
+    transition: all 0.3s ease;
 }
+
+.battles-experience-text--changing {
+    transform: scale(1.1);
+    color: #ffd100; /* Более яркий цвет при изменении */
+    text-shadow: 0 0 10px rgba(248, 170, 49, 0.5);
+}
+
 /* creating css star from div */
 .star-image {
     position: relative;
@@ -43,6 +53,7 @@
         39% 35%
     );
     border: 1px solid var(--borders-default-color);
+    transition: all 0.3s ease;
 }
 
 /* for maximum compatibility was added SVG fallback */
@@ -65,17 +76,41 @@
 
 /* animation on expo change */
 .star-image--animated {
-    animation: starGlow 2s ease-in-out infinite;
+    animation: starGlow 2s ease-in-out;
+    transform: scale(1.1);
 }
 
 @keyframes starGlow {
-    0%,
-    100% {
+    0% {
         transform: scale(1);
         box-shadow: 0 0 0 rgba(248, 170, 49, 0.4);
     }
     50% {
-        transform: scale(1.05);
+        transform: scale(1.2);
         box-shadow: 0 0 20px rgba(248, 170, 49, 0.8);
     }
+    100% {
+        transform: scale(1.1);
+        box-shadow: 0 0 10px rgba(248, 170, 49, 0.6);
+    }
+}
+
+/* Pulsate effect for text */
+@keyframes pulsate {
+    0% {
+        transform: scale(1);
+        text-shadow: 0 0 0 rgba(248, 170, 49, 0.5);
+    }
+    50% {
+        transform: scale(1.1);
+        text-shadow: 0 0 15px rgba(248, 170, 49, 0.8);
+    }
+    100% {
+        transform: scale(1.05);
+        text-shadow: 0 0 10px rgba(248, 170, 49, 0.6);
+    }
+}
+
+.battles-experience-text--changing {
+    animation: pulsate 2s ease-in-out;
 }

@@ -1,34 +1,33 @@
 .battles-progress {
     width: 345px;
     height: 107px;
+    position: relative;
 }
+
 .battles-progress-container {
     position: relative;
     width: 100%;
     height: 57px;
     border-radius: 6px;
     overflow: visible;
-    /* inner background */
     background: var(--battles-block-bg-gradient);
 }
 
-/* pseudo-element draws the gradient border and cuts out center */
 .battles-progress-container::before {
     content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: var(--battles-block-border); /* gradient for border */
-    padding: 1px; /* thickness of border */
+    background: var(--battles-block-border);
+    padding: 1px;
     box-sizing: border-box;
     pointer-events: none;
-
-    /* mask to cut out the center so only the frame remains */
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
 }
+
 .battles-progress-bar {
     position: absolute;
     top: 22px;
@@ -46,8 +45,10 @@
     height: 100%;
     background: var(--battles-filled-gradient);
     border-radius: 4px;
-    transition: width 0.5s ease-in-out;
+    transition: width 0.1s ease-out;
     position: relative;
+    max-width: 100%;
+    width: 0%;
 }
 
 .battles-progress-fill::after {
@@ -63,14 +64,29 @@
         rgba(255, 255, 255, 0.2) 50%,
         transparent 100%
     );
-    animation: shimmer 2s infinite;
 }
 
-@keyframes shimmer {
-    0% {
-        transform: translateX(-100%);
-    }
-    100% {
-        transform: translateX(100%);
-    }
+.battles-progress-thumb {
+    position: absolute;
+    top: 50%;
+    left: 22px;
+    transform: translate(-50%, -50%);
+    width: 44px;
+    height: 44px;
+    background-image: url("../../assets/Controller.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: grab;
+    z-index: 20;
+    transition: left 0.1s ease-out;
+    outline: none;
+}
+
+.battles-progress-thumb:active {
+    cursor: grabbing;
+}
+
+.battles-progress-thumb:focus-visible {
+    outline: 2px solid var(--experience-font-color);
+    outline-offset: 2px;
 }
