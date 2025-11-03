@@ -35,6 +35,7 @@ interface TankCardProps {
     tank: TankData;
     isSelected: boolean;
     onClick: (tank: TankData, targetEl: HTMLElement, e: MouseEvent, index: number) => void;
+    onHover: (tank: TankData, targetEl: HTMLElement, index: number) => void;
     index: number;
 }
 
