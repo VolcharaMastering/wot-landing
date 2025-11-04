@@ -15,7 +15,11 @@
 }
 
 @media (max-width: 480px) {
+    .tanks-block {
+        margin: 0;
+    }
     .tanks-block__grid {
         grid-template-columns: 1fr;
+        gap: 0;
     }
 }

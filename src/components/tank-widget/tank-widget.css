@@ -2,7 +2,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000; /* Увеличиваем z-index */
+    z-index: 5;
     width: 0;
     height: 0;
     display: flex;
@@ -19,7 +19,7 @@
     visibility: visible;
     max-width: 672px;
     max-height: 410px;
-    width: 100%;
+    /* width: 100%; */
     height: 100%;
     pointer-events: auto; /* Разрешаем взаимодействие */
 }
@@ -28,7 +28,6 @@
     position: absolute;
     background: var(--widget-bg-color);
     border: 1px solid var(--widget-border-color);
-    border-radius: var(--border-radius);
     padding: 24px;
     height: 100%;
     overflow-y: auto;
@@ -43,7 +42,6 @@
     transform: translateY(0);
 }
 
-/* Исправляем границу стрелок */
 .tank-widget--arrow-top .tank-widget__content::before,
 .tank-widget--arrow-top .tank-widget__content::after,
 .tank-widget--arrow-bottom .tank-widget__content::before,
@@ -52,14 +50,14 @@
     transform: translateX(-50%);
 }
 
-/* Стрелка вверх - виджет под карточкой */
+/* arrow-top */
 .tank-widget--arrow-top .tank-widget__content::before {
     content: "";
     position: absolute;
-    top: -12px; /* Увеличиваем на 1px для перекрытия границы */
-    border-left: 12px solid transparent;
-    border-right: 12px solid transparent;
-    border-bottom: 12px solid var(--widget-border-color); /* Увеличиваем на 1px */
+    top: -35px;
+    border-left: 32px solid transparent;
+    border-right: 32px solid transparent;
+    border-bottom: 35px solid var(--widget-border-color);
     width: 0;
     height: 0;
     z-index: 2;
@@ -69,24 +67,24 @@
 .tank-widget--arrow-top .tank-widget__content::after {
     content: "";
     position: absolute;
-    top: -11px; /* Увеличиваем на 1px для перекрытия границы */
-    border-left: 11px solid transparent;
-    border-right: 11px solid transparent;
-    border-bottom: 11px solid var(--widget-bg-color); /* Увеличиваем на 1px */
+    top: -33px;
+    border-left: 32px solid transparent;
+    border-right: 32px solid transparent;
+    border-bottom: 33px solid var(--widget-bg-color);
     width: 0;
     height: 0;
     z-index: 3;
     pointer-events: none;
 }
 
-/* Стрелка вниз - виджет над карточкой */
+/* arrow-bottom */
 .tank-widget--arrow-bottom .tank-widget__content::before {
     content: "";
     position: absolute;
-    bottom: -12px; /* Увеличиваем на 1px для перекрытия границы */
-    border-left: 12px solid transparent;
-    border-right: 12px solid transparent;
-    border-top: 12px solid var(--widget-border-color); /* Увеличиваем на 1px */
+    bottom: -35px;
+    border-left: 32px solid transparent;
+    border-right: 32px solid transparent;
+    border-top: 35px solid var(--widget-border-color);
     width: 0;
     height: 0;
     z-index: 2;
@@ -96,10 +94,10 @@
 .tank-widget--arrow-bottom .tank-widget__content::after {
     content: "";
     position: absolute;
-    bottom: -11px; /* Увеличиваем на 1px для перекрытия границы */
-    border-left: 11px solid transparent;
-    border-right: 11px solid transparent;
-    border-top: 11px solid var(--widget-bg-color); /* Увеличиваем на 1px */
+    bottom: -33px;
+    border-left: 31px solid transparent;
+    border-right: 31px solid transparent;
+    border-top: 33px solid var(--widget-bg-color);
     width: 0;
     height: 0;
     z-index: 3;
@@ -109,7 +107,7 @@
 .tank-widget__body {
     display: grid;
     grid-template: repeat(2, auto) / repeat(2, auto);
-    gap: 0 39px;
+    gap: 15px 40px;
     align-content: center;
 }
 

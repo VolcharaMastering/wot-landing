@@ -33,6 +33,15 @@ input {
     align-items: center;
 }
 
+.latin-text {
+    font-size: 16px;
+    color: var(--text-color);
+    width: 100%;
+    padding: 18px 20px;
+    line-height: 18px;
+    margin-bottom: 40px;
+}
+
 .battles-subtitle {
     color: var(--subtitle-font-color);
     font-size: 28px;
@@ -45,6 +54,11 @@ input {
         text-align: center;
         /* margin: 5px 0 10px 0px; */
         margin: 0;
+    }
+
+    .latin-text {
+        padding: 10px;
+        margin-bottom: 80px;
     }
 }
 

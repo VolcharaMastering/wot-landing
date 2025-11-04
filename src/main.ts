@@ -1,7 +1,7 @@
 import { initTanksBlock } from "./components/tanks-block/tanks-block";
 import { initTankWidget } from "./components/tank-widget/tank-widget";
 import { calculateExperience } from "./utils/experience-calculator";
-import { mockTanks } from "./mock-tanks";
+import { mockTanks, strangeLatinText } from "./mock-tanks";
 import "./style.css";
 
 // Start state of app
@@ -19,7 +19,6 @@ initialState.experience = calculateExperience(
     initialState.battles,
     initialState.selectedConfiguration
 ).totalExperience;
-
 function initApp(root: HTMLElement): () => void {
     let currentState: AppState = { ...initialState };
     let tankWidget: HTMLElement | null = null;
@@ -67,7 +66,7 @@ function initApp(root: HTMLElement): () => void {
         }
         closeTimer = window.setTimeout(() => {
             closeWidget();
-        }, 1000);
+        }, 100000000000);
     };
 
     // Cancel close timer
@@ -180,6 +179,10 @@ function initApp(root: HTMLElement): () => void {
 
     const renderApp = () => {
         tanksSection.innerHTML = "";
+        const latinTextElement = document.createElement("p");
+        latinTextElement.className = "latin-text";
+        latinTextElement.textContent = strangeLatinText;
+        tanksSection.appendChild(latinTextElement);
         const tanksBlock = initTanksBlock({
             tanks: mockTanks,
             selectedTank: currentState.selectedTank,

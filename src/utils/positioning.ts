@@ -4,28 +4,30 @@ export const computeWidgetPlacement = (
     index: number,
     opts?: { gap?: number; margin?: number }
 ): WidgetPlacement => {
+    // Gap between content and target elements
     const gap = opts?.gap ?? 8;
+
+    // Margin between content and viewport
     const margin = opts?.margin ?? 8;
 
     const targetRect = targetEl.getBoundingClientRect();
     const contentRect = contentEl.getBoundingClientRect();
     const viewportW = window.innerWidth;
-    const viewportH = window.innerHeight;
 
-    // Определяем ряд (0 - верхний, 1 - нижний)
+    // Determine the row (0 - top, 1 - bottom)
     const rowIndex = Math.floor(index / 3);
 
-    // Для верхнего ряда показываем виджет снизу, для нижнего - сверху
+    // For the top row, show the content below, for the bottom row - above
     let vertical: VerticalMode;
     if (rowIndex === 0) {
-        // Верхний ряд - виджет снизу (стрелка вверх)
+        // Top row - content below (arrow up)
         vertical = "top";
     } else {
-        // Нижний ряд - виджет сверху (стрелка вниз)
+        // Bottom row - content above (arrow down)
         vertical = "bottom";
     }
 
-    // Фиксированные позиции стрелки в зависимости от положения танка
+    // Fixed positions of the arrow depending on the position of the tank
     let arrowSide: ArrowSide;
     let desiredArrowLeft: number;
 
@@ -41,22 +43,22 @@ export const computeWidgetPlacement = (
         desiredArrowLeft = contentRect.width - 95;
     }
 
-    // Позиционируем виджет так, чтобы стрелка указывала на центр целевого элемента
+    // Position the content so that the arrow points to the center of the target element
     const targetCenterX = targetRect.left + targetRect.width / 2;
     let contentLeft = targetCenterX - desiredArrowLeft;
 
-    // Ограничиваем позиционирование в пределах viewport
+    // Constrain the content position to the viewport
     contentLeft = Math.max(margin, Math.min(contentLeft, viewportW - contentRect.width - margin));
 
-    // Вычисляем top позицию
+    // Get the content top
     let contentTop: number;
     if (vertical === "top") {
-        contentTop = targetRect.bottom + gap; // Виджет под карточкой
+        contentTop = targetRect.bottom + gap; // under target
     } else {
-        contentTop = targetRect.top - contentRect.height - gap; // Виджет над карточкой
+        contentTop = targetRect.top - contentRect.height - gap; // over target
     }
 
-    // Реальное положение стрелки после ограничений
+    // Actual position of the arrow after constraints
     const actualArrowLeft = targetCenterX - contentLeft;
 
     return {
@@ -68,7 +70,7 @@ export const computeWidgetPlacement = (
     };
 };
 
-// function to apply placement to content
+// Function to apply placement to content
 export const applyPlacementToContent = (contentEl: HTMLElement, placement: WidgetPlacement) => {
     contentEl.style.position = "absolute";
     contentEl.style.left = `${placement.left}px`;

@@ -92,13 +92,18 @@ export function initTankWidget(props: TankWidgetProps): HTMLElement {
     };
 
     // Initialize components
-    initConfiguration(body, localState, wrappedOnStateChange);
-    battlesProgress = initBattlesProgress(body, localState, wrappedOnStateChange);
-    battlesInput = initBattlesInput(body, localState, wrappedOnStateChange);
     if (mobile) {
+        initConfiguration(body, localState, wrappedOnStateChange);
+        battlesProgress = initBattlesProgress(body, localState, wrappedOnStateChange);
+        battlesInput = initBattlesInput(body, localState, wrappedOnStateChange);
         body.insertAdjacentHTML("beforeend", '<div class="divider"></div>');
+        battlesExperience = initBattlesExperience(body, localState, wrappedOnStateChange);
+    } else {
+        initConfiguration(body, localState, wrappedOnStateChange);
+        battlesExperience = initBattlesExperience(body, localState, wrappedOnStateChange);
+        battlesProgress = initBattlesProgress(body, localState, wrappedOnStateChange);
+        battlesInput = initBattlesInput(body, localState, wrappedOnStateChange);
     }
-    battlesExperience = initBattlesExperience(body, localState, wrappedOnStateChange);
 
     // Initialize experience on creation
     const initialExperience = recalculateExperience(localState);
@@ -128,7 +133,10 @@ export function initTankWidget(props: TankWidgetProps): HTMLElement {
     // Positioning for desctop
     if (!mobile) {
         const positionWidget = () => {
-            const placement = computeWidgetPlacement(content, props.targetEl, props.index);
+            const placement = computeWidgetPlacement(content, props.targetEl, props.index, {
+                gap: 20,
+                margin: 20,
+            });
             applyPlacementToContent(content, placement);
         };
 
