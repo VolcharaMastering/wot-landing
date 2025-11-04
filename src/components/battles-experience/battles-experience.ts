@@ -3,7 +3,7 @@ import "./battles-experience.css";
 export function initBattlesExperience(
     root: HTMLElement,
     state: AppState,
-    onStateChange?: (newState: Partial<AppState>) => void
+    _onStateChange?: (newState: Partial<AppState>) => void
 ): HTMLElement {
     const container = document.createElement("div");
     container.className = "battles-experience";

@@ -78,7 +78,7 @@ function initApp(root: HTMLElement): () => void {
     };
 
     // Open widget function
-    const openWidget = (tank: TankData, targetEl: HTMLElement, index: number, e?: MouseEvent) => {
+    const openWidget = (tank: TankData, targetEl: HTMLElement, index: number, _e?: MouseEvent) => {
         // Cancel any pending close
         if (!mobile) {
             cancelCloseTimer();
