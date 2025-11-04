@@ -12,46 +12,51 @@ export const computeWidgetPlacement = (
     const viewportW = window.innerWidth;
     const viewportH = window.innerHeight;
 
-    // Detect row and column of clicked tank
-    const colIndex = index % 3;
+    // Определяем ряд (0 - верхний, 1 - нижний)
+    const rowIndex = Math.floor(index / 3);
 
-    // Detect vertical position
-    const spaceBelow = viewportH - targetRect.bottom;
-    const spaceAbove = targetRect.top;
-    const showBelow = spaceBelow >= contentRect.height + gap || spaceBelow >= spaceAbove;
-    const vertical: VerticalMode = showBelow ? "top" : "bottom";
+    // Для верхнего ряда показываем виджет снизу, для нижнего - сверху
+    let vertical: VerticalMode;
+    if (rowIndex === 0) {
+        // Верхний ряд - виджет снизу (стрелка вверх)
+        vertical = "top";
+    } else {
+        // Нижний ряд - виджет сверху (стрелка вниз)
+        vertical = "bottom";
+    }
 
-    // Arrow position according to column
+    // Фиксированные позиции стрелки в зависимости от положения танка
     let arrowSide: ArrowSide;
     let desiredArrowLeft: number;
 
+    const colIndex = index % 3;
     if (colIndex === 0) {
         arrowSide = "left";
-        desiredArrowLeft = 95; // 95px from left
+        desiredArrowLeft = 95;
     } else if (colIndex === 1) {
         arrowSide = "center";
         desiredArrowLeft = contentRect.width / 2;
     } else {
         arrowSide = "right";
-        desiredArrowLeft = contentRect.width - 95; // 95px from right
+        desiredArrowLeft = contentRect.width - 95;
     }
 
-    // positioning aroow to center of clicked card
+    // Позиционируем виджет так, чтобы стрелка указывала на центр целевого элемента
     const targetCenterX = targetRect.left + targetRect.width / 2;
     let contentLeft = targetCenterX - desiredArrowLeft;
 
-    // Positioning in viewport range
+    // Ограничиваем позиционирование в пределах viewport
     contentLeft = Math.max(margin, Math.min(contentLeft, viewportW - contentRect.width - margin));
 
-    // Detect horizontal position
+    // Вычисляем top позицию
     let contentTop: number;
     if (vertical === "top") {
-        contentTop = targetRect.bottom + gap;
+        contentTop = targetRect.bottom + gap; // Виджет под карточкой
     } else {
-        contentTop = targetRect.top - contentRect.height - gap;
+        contentTop = targetRect.top - contentRect.height - gap; // Виджет над карточкой
     }
 
-    // Real position of arrow
+    // Реальное положение стрелки после ограничений
     const actualArrowLeft = targetCenterX - contentLeft;
 
     return {

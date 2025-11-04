@@ -114,3 +114,18 @@
 .battles-experience-text--changing {
     animation: pulsate 2s ease-in-out;
 }
+@media screen and (max-width: 767px) {
+    .battles-experience {
+        margin-bottom: 55px;
+    }
+    .battles-experience-text {
+        font-size: 40px;
+    }
+    .battles-experience-container {
+        gap: 32px;
+    }
+    .star-image {
+        width: 46px;
+        height: 46px;
+    }
+}

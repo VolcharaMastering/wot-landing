@@ -26,6 +26,7 @@ function initApp(root: HTMLElement): () => void {
     let closeTimer: number | null = null;
     let currentHoverCard: HTMLElement | null = null;
 
+    const mobile = window.innerWidth <= 768;
     const tanksSection = document.createElement("section");
     tanksSection.className = "tanks-section";
     root.appendChild(tanksSection);
@@ -80,7 +81,9 @@ function initApp(root: HTMLElement): () => void {
     // Open widget function
     const openWidget = (tank: TankData, targetEl: HTMLElement, index: number, e?: MouseEvent) => {
         // Cancel any pending close
-        cancelCloseTimer();
+        if (!mobile) {
+            cancelCloseTimer();
+        }
 
         // Close previous widget if exists
         if (tankWidget) {
@@ -90,7 +93,9 @@ function initApp(root: HTMLElement): () => void {
         }
 
         // Set current hover card
-        currentHoverCard = targetEl;
+        if (!mobile) {
+            currentHoverCard = targetEl;
+        }
 
         // Experience counter for selected tank
         const tankExperience = calculateExperience(
@@ -123,22 +128,21 @@ function initApp(root: HTMLElement): () => void {
             document.body.appendChild(tankWidget);
 
             // Add hover events for desktop
-            if (window.innerWidth > 768) {
+            if (!mobile) {
                 const widgetElement = tankWidget as HTMLElement;
 
-                // handler for widget mouseenter
+                // Handler for vidget hover
                 widgetElement.addEventListener("mouseenter", () => {
                     cancelCloseTimer();
                 });
 
                 widgetElement.addEventListener("mouseleave", (e) => {
-                    // Check if mouse left the widget
                     if (!widgetElement.contains(e.relatedTarget as Node)) {
                         startCloseTimer();
                     }
                 });
 
-                // Add handler for card mouseleave
+                // Handler for mouse leave
                 if (currentHoverCard) {
                     const cardMouseLeaveHandler = (e: MouseEvent) => {
                         if (!widgetElement.contains(e.relatedTarget as Node)) {
@@ -148,15 +152,17 @@ function initApp(root: HTMLElement): () => void {
 
                     currentHoverCard.addEventListener("mouseleave", cardMouseLeaveHandler);
 
-                    // Save handler for cleanup
+                    // save link mouse leave handler
                     (tankWidget as any).cardMouseLeaveHandler = cardMouseLeaveHandler;
                 }
             }
 
             // Force initial position after appended and styles applied
-            requestAnimationFrame(() => {
-                (tankWidget as any).__position?.();
-            });
+            if (!mobile) {
+                requestAnimationFrame(() => {
+                    (tankWidget as any).__position?.();
+                });
+            }
         }, 30);
     };
 
@@ -167,7 +173,7 @@ function initApp(root: HTMLElement): () => void {
 
     // Hover handler for desktop
     const handleHover = (tank: TankData, targetEl: HTMLElement, index: number) => {
-        if (window.innerWidth > 768) {
+        if (!mobile) {
             openWidget(tank, targetEl, index);
         }
     };
@@ -210,6 +216,8 @@ function initApp(root: HTMLElement): () => void {
 const appRoot = document.getElementById("app");
 if (appRoot) {
     initApp(appRoot);
+    //  SPA
+    // const cleanup = initApp(appRoot);
     // window.addEventListener('beforeunload', cleanup);
 } else {
     console.error("Root element #app not found");

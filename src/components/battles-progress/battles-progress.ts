@@ -6,6 +6,7 @@ export function initBattlesProgress(
     state: AppState,
     onStateChange: (newState: Partial<AppState>) => void
 ): HTMLElement {
+    const mobile = window.innerWidth <= 768;
     const container = document.createElement("div");
     container.className = "battles-progress";
 
@@ -45,7 +46,7 @@ export function initBattlesProgress(
         progressFill.style.width = `${percentage}%`;
 
         // Position thumb in progress bar
-        const thumbPosition = 22 + (percentage / 100) * 301;
+        const thumbPosition = 22 + (percentage / 100) * (mobile ? 216 : 301);
         thumb.style.left = `${thumbPosition}px`;
 
         thumb.setAttribute("aria-valuenow", battles.toString());

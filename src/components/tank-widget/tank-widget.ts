@@ -9,16 +9,27 @@ import "./tank-widget.css";
 export function initTankWidget(props: TankWidgetProps): HTMLElement {
     const widget = document.createElement("div");
     widget.className = "tank-widget";
+    const mobile = window.innerWidth <= 768;
 
-    widget.innerHTML = `
-    <div class="tank-widget__content" role="dialog" aria-modal="true">
-        <button class="tank-widget__close" aria-label="Close tank information">&times;</button>
-        <div class="tank-widget__body"></div>
-    </div>
-  `;
+    if (mobile) {
+        widget.innerHTML = `
+            <div class="tank-widget__content" role="dialog" aria-modal="true">
+                <div class="tank-widget__header">
+                    <h2 class="tank-widget__name">${props.tank.name}</h2>
+                    <button class="tank-widget__close" aria-label="Close tank information">&times;</button>
+                </div>
+                <div class="tank-widget__body"></div>
+            </div>
+        `;
+    } else {
+        widget.innerHTML = `
+            <div class="tank-widget__content" role="dialog" aria-modal="true">
+                <div class="tank-widget__body"></div>
+            </div>
+        `;
+    }
 
     const content = widget.querySelector(".tank-widget__content") as HTMLElement;
-    const closeBtn = widget.querySelector(".tank-widget__close") as HTMLButtonElement;
     const body = widget.querySelector(".tank-widget__body") as HTMLElement;
 
     const cleanupFunctions: (() => void)[] = [];
@@ -26,9 +37,14 @@ export function initTankWidget(props: TankWidgetProps): HTMLElement {
     let battlesInput: HTMLElement | null = null;
     let battlesExperience: HTMLElement | null = null;
 
-    // Close button handler (скрыт, но на всякий случай)
-    closeBtn.addEventListener("click", props.onClose);
-    cleanupFunctions.push(() => closeBtn.removeEventListener("click", props.onClose));
+    // Close button handler
+    if (mobile) {
+        const closeBtn = widget.querySelector(".tank-widget__close") as HTMLButtonElement;
+        if (closeBtn) {
+            closeBtn.addEventListener("click", props.onClose);
+            cleanupFunctions.push(() => closeBtn.removeEventListener("click", props.onClose));
+        }
+    }
 
     // Escape key handler
     const onKeyDown = (event: KeyboardEvent) => {
@@ -79,6 +95,9 @@ export function initTankWidget(props: TankWidgetProps): HTMLElement {
     initConfiguration(body, localState, wrappedOnStateChange);
     battlesProgress = initBattlesProgress(body, localState, wrappedOnStateChange);
     battlesInput = initBattlesInput(body, localState, wrappedOnStateChange);
+    if (mobile) {
+        body.insertAdjacentHTML("beforeend", '<div class="divider"></div>');
+    }
     battlesExperience = initBattlesExperience(body, localState, wrappedOnStateChange);
 
     // Initialize experience on creation
@@ -106,34 +125,38 @@ export function initTankWidget(props: TankWidgetProps): HTMLElement {
         widget.classList.add("tank-widget--visible");
     });
 
-    // Positioning
-    const positionWidget = () => {
-        const placement = computeWidgetPlacement(content, props.targetEl, props.index);
-        applyPlacementToContent(content, placement);
-    };
+    // Positioning for desctop
+    if (!mobile) {
+        const positionWidget = () => {
+            const placement = computeWidgetPlacement(content, props.targetEl, props.index);
+            applyPlacementToContent(content, placement);
+        };
 
-    const onWindowChange = () => {
-        positionWidget();
-    };
+        const onWindowChange = () => {
+            positionWidget();
+        };
 
-    window.addEventListener("resize", onWindowChange);
-    window.addEventListener("scroll", onWindowChange, true);
+        window.addEventListener("resize", onWindowChange);
+        window.addEventListener("scroll", onWindowChange, true);
 
-    cleanupFunctions.push(() => {
-        window.removeEventListener("resize", onWindowChange);
-        window.removeEventListener("scroll", onWindowChange, true);
+        cleanupFunctions.push(() => {
+            window.removeEventListener("resize", onWindowChange);
+            window.removeEventListener("scroll", onWindowChange, true);
 
-        // Clean up event handlers if they exist
-        if ((widget as any).cardMouseLeaveHandler && props.targetEl) {
-            props.targetEl.removeEventListener("mouseleave", (widget as any).cardMouseLeaveHandler);
-        }
-    });
+            // Очищаем обработчик карточки если он есть
+            if ((widget as any).cardMouseLeaveHandler && props.targetEl) {
+                props.targetEl.removeEventListener(
+                    "mouseleave",
+                    (widget as any).cardMouseLeaveHandler
+                );
+            }
+        });
+        (widget as any).__position = positionWidget;
+    }
 
     (widget as any).__cleanup = () => {
         cleanupFunctions.forEach((cleanup) => cleanup());
     };
-
-    (widget as any).__position = positionWidget;
 
     return widget;
 }

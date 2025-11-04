@@ -39,6 +39,14 @@ input {
     font-weight: bold;
     margin: 0 0 18px 0;
 }
+@media screen and (max-width: 767px) {
+    .battles-subtitle {
+        font-size: 22px;
+        text-align: center;
+        /* margin: 5px 0 10px 0px; */
+        margin: 0;
+    }
+}
 
 @keyframes fadeIn {
     from {

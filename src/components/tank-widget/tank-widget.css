@@ -2,7 +2,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 2;
+    z-index: 1000; /* Увеличиваем z-index */
     width: 0;
     height: 0;
     display: flex;
@@ -21,6 +21,7 @@
     max-height: 410px;
     width: 100%;
     height: 100%;
+    pointer-events: auto; /* Разрешаем взаимодействие */
 }
 
 .tank-widget__content {
@@ -35,13 +36,14 @@
     transition: transform 0.3s ease;
     --arrow-left: 50%;
     overflow: visible;
+    pointer-events: auto; /* Контент должен быть интерактивным */
 }
 
 .tank-widget--visible .tank-widget__content {
     transform: translateY(0);
 }
 
-/* Global arrow styles */
+/* Исправляем границу стрелок */
 .tank-widget--arrow-top .tank-widget__content::before,
 .tank-widget--arrow-top .tank-widget__content::after,
 .tank-widget--arrow-bottom .tank-widget__content::before,
@@ -50,14 +52,14 @@
     transform: translateX(-50%);
 }
 
-/* Arrow up, widget under tank */
+/* Стрелка вверх - виджет под карточкой */
 .tank-widget--arrow-top .tank-widget__content::before {
     content: "";
     position: absolute;
-    top: -12px;
+    top: -12px; /* Увеличиваем на 1px для перекрытия границы */
     border-left: 12px solid transparent;
     border-right: 12px solid transparent;
-    border-bottom: 12px solid var(--widget-border-color);
+    border-bottom: 12px solid var(--widget-border-color); /* Увеличиваем на 1px */
     width: 0;
     height: 0;
     z-index: 2;
@@ -67,24 +69,24 @@
 .tank-widget--arrow-top .tank-widget__content::after {
     content: "";
     position: absolute;
-    top: -11px;
+    top: -11px; /* Увеличиваем на 1px для перекрытия границы */
     border-left: 11px solid transparent;
     border-right: 11px solid transparent;
-    border-bottom: 11px solid var(--widget-bg-color);
+    border-bottom: 11px solid var(--widget-bg-color); /* Увеличиваем на 1px */
     width: 0;
     height: 0;
     z-index: 3;
     pointer-events: none;
 }
 
-/* Aroow down, widget over tank */
+/* Стрелка вниз - виджет над карточкой */
 .tank-widget--arrow-bottom .tank-widget__content::before {
     content: "";
     position: absolute;
-    bottom: -12px;
+    bottom: -12px; /* Увеличиваем на 1px для перекрытия границы */
     border-left: 12px solid transparent;
     border-right: 12px solid transparent;
-    border-top: 12px solid var(--widget-border-color);
+    border-top: 12px solid var(--widget-border-color); /* Увеличиваем на 1px */
     width: 0;
     height: 0;
     z-index: 2;
@@ -94,10 +96,10 @@
 .tank-widget--arrow-bottom .tank-widget__content::after {
     content: "";
     position: absolute;
-    bottom: -11px;
+    bottom: -11px; /* Увеличиваем на 1px для перекрытия границы */
     border-left: 11px solid transparent;
     border-right: 11px solid transparent;
-    border-top: 11px solid var(--widget-bg-color);
+    border-top: 11px solid var(--widget-bg-color); /* Увеличиваем на 1px */
     width: 0;
     height: 0;
     z-index: 3;
@@ -111,7 +113,71 @@
     align-content: center;
 }
 
+.tank-widget__header {
+    position: absolute;
+    top: 18px;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+}
+.tank-widget__name {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--label-font-color);
+}
 .tank-widget__close {
-    display: none;
-    visibility: hidden;
+    width: 36px;
+    height: 36px;
+    background-color: var(--btn-bg-color);
+    color: var(--btn-icon-color);
+    font-size: 30px;
+    border: none;
+    border-radius: 4%;
+    cursor: pointer;
+    transition: var(--transition);
+}
+.tank-widget__close:hover {
+    opacity: 0.7;
+}
+@media screen and (max-width: 767px) {
+    .tank-widget--visible {
+        max-width: 100%;
+        max-height: 100%;
+        width: 100%;
+        height: 100%;
+        background: var(--widget-bg-color-mobile);
+        z-index: 5;
+    }
+    .tank-widget__content {
+        position: static;
+        border: none;
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: transparent;
+    }
+    .tank-widget__body {
+        box-sizing: border-box;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 25px;
+        margin-top: 65px;
+    }
+    .divider {
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--widget-border-color), transparent);
+        border: none;
+        margin: 0;
+    }
 }

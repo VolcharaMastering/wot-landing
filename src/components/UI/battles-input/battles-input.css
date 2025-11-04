@@ -56,3 +56,10 @@
 .battles-input:focus-visible {
     border-color: var(--btn-bg-color);
 }
+
+@media screen and (max-width: 767px) {
+    .battles-input {
+        align-self: center;
+        margin-top: 10px;
+    }
+}

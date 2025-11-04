@@ -18,6 +18,7 @@
 
     /* Widget */
     --widget-bg-color: rgba(42, 42, 42, 0.9);
+    --widget-bg-color-mobile: rgba(42, 42, 42, 0.95);
     --widget-border-color: #747474;
 
     /* Buttons */
